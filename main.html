@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/Portfolio Website/Portfolio Website/icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume</title>
+    <!--===== Font Awesome =====-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!--===== Main CSS =====-->
+    <link rel="stylesheet" href="/Portfolio Website/Portfolio Website/css/style.css">
+</head>
+<body>
+    <div>
+      <!--===== Navbar Start =====-->
+      <nav class="navbar">
+          <div class="container">
+              <div class="row justify-content-between">
+                  <div class="logo"><a href="index.html">My<span>Resume</span></a></div>
+                  <div class="links">
+                  <ul class="menu">
+                      <li class="nav-item"><a href="#contact" class="nav-link">Setting 
+                        <span>
+                        
+                   BSCpE 3-1
+                      </span></a></li>
+                  </ul>
+                  </div>
+                  <div class="menu-btn">
+                      <i class="fas fa-bars"></i>
+                  </div>
+              </div>
+          </div>
+      </nav>
+      <!--===== Navbar End =====-->
+      <!--===== Home Section Start =====-->
+      <section class="home-section" id="home">
+          <ul class="header-social"> <!--===== Header Social =====-->
+              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+          </ul>
+          <div class="container">
+              <div class="row align-items-center">
+                  <div class="home-text">
+                      <h4>Hello I'm</h4>
+                      <h1>Jabigail Abella</h1>
+                      <span>Quality Assurance</span>
+                      <p>Short Description about your profession!</p>
+                           <a href="/Portfolio Website/Portfolio Website/index.html" class="btn btn-1">PLAY!</a>
+                  </div>
+                  <div class="home-image">
+                      <div class="img-box">
+                          <img src="./hero.png" alt="">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="header-hero-shape"></div> <!--===== Hero Shape =====-->
+      </section>
+    </div>
+      <!--===== Home Section End =====-->
+     
+       <!--===== Footer Section Start =====-->
+       <footer class="footer">
+           <div class="container">
+               <div class="row justify-content-center">
+                   <p class="copyright-text">&copy; 2024 Jabi's Resume</p>
+               </div>
+           </div>
+       </footer>
+       <!--===== Footer Section End =====-->
+       <!--===== Lightbox Start =====-->
+      <div class="lightbox">
+          <div class="lightbox-content">
+              <div class="lightbox-close">&times;</div>
+              <img src="images/portfolio/portfolio-2.jpg000" onclick="nextItem()" class="lightbox-img" alt="">
+              <div class="lightbox-caption">
+                  <div class="caption-text"></div>
+                  <div class="caption-counter"></div>
+              </div>
+          </div>
+          <div class="lightbox-controls">
+              <div class="prev-item" onclick="prevItem()"><i class="fa fa-angle-left"></i></div>
+              <div class="next-item" onclick="nextItem()"><i class="fa fa-angle-right"></i></div>
+          </div>
+      </div>
+      <!--===== Lightbox End =====-->
+      <!--===== Main JS =====-->
+    <script src="js/main.js"></script>
+</body>
+</html>

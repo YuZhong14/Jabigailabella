@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <link rel="icon" href="/Portfolio Website/Portfolio Website/icon.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Resume</title>
+  <style>
+    body {
+      font-family: "Kaushan Script", cursive;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+      background-image:  url("./pink2.jpg");
+      background-repeat: repeat x;
+      background-size: 100vw 100vh;
+      animation: move 44s linear infinite;
+
+    }
+
+@keyframes move{
+
+      from{
+        background-position: 0 0;
+      }  
+      to{
+        background-position: -100vw 0 ;
+      }
+}
+
+  
+    canvas {
+      border: 5px solid black;
+      display: block;
+      margin: -30px auto;
+      background-image:  url('./pink3.jpg');
+      background-repeat: repeat x;
+      background-size: 100vw 100vh;
+      animation: move 44s linear infinite;
+    
+      
+    }
+
+    @keyframes move{
+
+from{
+  background-position: 0 0;
+}  
+to{
+  background-position: -100vw 0 ;
+}
+}
+
+    #controls {
+      margin-bottom: 10px;
+      opacity: 0;
+    }
+
+    #notification {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #AA336A;
+            color: white;
+            font-weight: 900;
+            padding: 50px;
+            border: solid 5px black;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+        }
+          #notification {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #AA336A;
+            color: white;
+            font-weight: 900;
+            padding: 50px;
+            border: solid 5px black;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+        }
+        button { margin: 10px; padding: 10px; font-size: 16px; }
+  </style>
+</head>
+<body >
+  <h1>Collect all coins to reveal the details of Resume</h1>
+  <div id="controls">
+    <label for="characterImage">Collect all coins to reveal the details of resume</label>
+     <input type="file" id="characterImage" accept="image/*">
+  </div>
+
+  <div id="notification">
+    <h1>Congratulations!</h1>
+    <p>Thank you! if you want to know me better please contact me @jabigaililaganabella.gmail.com</p>
+    <button onclick="location.reload()">Play Again</button>
+    <button onclick="window.location.href='index.html'">Home</button>
+</div>
+
+  <canvas id="gameCanvas" width="1200" height="520" ></canvas>
+  <div id="notification" class="notification"></div>
+  <audio id="coinSound" src="/Portfolio Website/Portfolio Website/coin.mp3"></audio>
+  <audio src="/Portfolio Website/Portfolio Website/squid.mp3" autoplay loop></audio>
+
+
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 35;
+    const coinSound = document.getElementById('coinSound');
+    const notification = document.getElementById('notification');
+
+
+        const totalCoins = 13;
+        let collectedCoins = 0;
+       const gameState = {
+        player: { x: 0, y: 0 },
+        coins: [],
+          maze: [],
+      characterImage: null,
+    };
+
+    const resumeDetails = [
+      "Name: Jabigail Ilagan Abella",
+      "Education: Bachelor of Science in Computer Engineering",
+      "Skills: Canva, Microsoft Office,Visual Studio,\n Team Player, Hardworking, Adaptability, Problem Solving",
+      "Experience: Quality Assurance at HSI\nAssociate Managing Editor, The Patriot (2023-2025)",
+      "Hobbies: Reading, Playing Guitar",
+      "Achivements:The Patriot Publication - Associate Managing EditorS.Y. 2023 - 2024\nPresident’s Lister S.Y. 2023- 2024\nSSG P.I.O S.Y. 2015 - 2017\nSocial Studies Club President S.Y. 2019 -2020",
+      "Age: 21",
+      "Email: jabigaililaganabella@gmail.com  ",
+      "Contact Number: 09091976101",
+      "Birthday: : January 27, 2004",
+      "Birthplace: : Bantayan, Dagumbaan,Maramag, Bukidnon",
+      "Seminars/Workshops: WebTech 2024 - Web Development Bootcamp\nTechExcel - Empowering Digital Leaders in the New Age of Engineering\nIT Insights: From Code to Completion\nInformation Protection: The Data Privacy Act Webinar"
+    ];
+    const Congratulations = [
+      "Thank You!\n If you want to know me better please contact me jabigaililaganabella@gmail.com",
+    ];
+
+    // Generate random maze and coin positions
+    function generateMazeAndCoins() {
+      for (let y = 0; y < canvas.height / gridSize; y++) {
+        gameState.maze[y] = [];
+        for (let x = 0; x < canvas.width / gridSize; x++) {
+          if (Math.random() < 0.3 && (x !== 0 || y !== 0)) {
+            gameState.maze[y][x] = true; // Obstacle
+          } else {
+            gameState.maze[y][x] = false;
+          }
+        }
+      }
+
+      for (let i = 0; i < totalCoins; i++) {
+        let coinX, coinY;
+        do {
+          coinX = Math.floor(Math.random() * (canvas.width / gridSize));
+          coinY = Math.floor(Math.random() * (canvas.height / gridSize));
+        } while (gameState.maze[coinY][coinX] || (coinX === 0 && coinY === 0));
+
+        gameState.coins.push({ x: coinX, y: coinY });
+      }
+    }
+
+    function drawMazeAndCoins() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let y = 0; y < gameState.maze.length; y++) {
+        for (let x = 0; x < gameState.maze[y].length; x++) {
+          if (gameState.maze[y][x]) {
+            ctx.fillStyle = '		#301934';
+            ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+          }
+        }
+      }
+
+      gameState.coins.forEach(coin => {
+        ctx.fillStyle = 'gold';
+        ctx.beginPath();
+        ctx.arc(coin.x * gridSize + gridSize / 2, coin.y * gridSize + gridSize / 2, gridSize / 4, 0, Math.PI * 20);
+        ctx.fill();
+      });
+
+      if (gameState.characterImage) {
+        ctx.drawImage(gameState.characterImage, gameState.player.x * gridSize, gameState.player.y * gridSize, gridSize, gridSize);
+      } else {
+        const img = new Image();
+        img.onload = () => {
+          gameState.characterImage = img;
+          drawMazeAndCoins();
+        };
+        img.src = 'jabi2.png';
+      }
+    }
+
+    function showResumePopup(detail) {
+      const notification = document.getElementById("notification");
+            notification.innerText = detail;
+            notification.style.display = "block";
+            setTimeout(() => { notification.style.display = "none"; }, 3500);
+            coinSound.play();
+    }
+    
+
+
+    function movePlayer(dx, dy) {
+      const newX = gameState.player.x + dx;
+      const newY = gameState.player.y + dy;
+
+      if (
+        newX >= 0 &&
+        newY >= 0 &&
+        newX < canvas.width / gridSize &&
+        newY < canvas.height / gridSize &&
+        !gameState.maze[newY][newX]
+      ) {
+        gameState.player.x = newX;
+        gameState.player.y = newY;
+
+
+        for (let i = 0; i < gameState.coins.length; i++) {
+          if (
+            gameState.coins[i].x === gameState.player.x &&
+            gameState.coins[i].y === gameState.player.y
+          ) {
+            showResumePopup(resumeDetails[i]); 
+            gameState.coins.splice(i, 1);
+          
+            collectedCoins++;
+
+            if (collectedCoins === totalCoins) {
+                      alert('Thank You!\n If you want to know me better please contact me jabigaililaganabella@gmail.com');
+                    }
+
+          }
+        }
+      }
+      
+
+      drawMazeAndCoins();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') movePlayer(0, -1);
+      if (e.key === 'ArrowDown') movePlayer(0, 1);
+      if (e.key === 'ArrowLeft') movePlayer(-1, 0);
+      if (e.key === 'ArrowRight') movePlayer(1, 0);
+    });
+
+    document.getElementById('characterImage').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const img = new Image();
+        img.onload = () => {
+          gameState.characterImage = img;
+          drawMazeAndCoins();
+        };
+        img.src = 'icon.png';
+      }
+    });
+
+    generateMazeAndCoins();
+    drawMazeAndCoins();
+  </script>
+</body>
+</html>
